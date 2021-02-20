@@ -4,10 +4,10 @@
 
 int main(){
 
-    //testCopying();
-    //testDeleting();
+    testCopying();
+    testDeleting();
     testInsertion();
-    //testDisplay();
+    testDisplay();
     
 }
 
