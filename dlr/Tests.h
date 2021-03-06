@@ -1,16 +1,14 @@
 #include <iostream>
 #include <stdlib.h>
 
-#include "DLR.h"
+#include "dlr.h"
 
 void testPopping(){
 
     DLR<int> ring;
-    //deleting from empty list
     ring.popByKey(3);
     ring.popFront();
     ring.popBack();
-    //adding elements
     ring.pushFront(1);
     ring.pushFront(2);
     ring.pushFront(3);
@@ -21,13 +19,10 @@ void testPopping(){
     ring.pushFront(8);
     ring.pushFront(9);
     ring.print();
-    //deleting 
     ring.popFront();
     ring.popBack();
     ring.popByKey(5);
-    //deleting non-existing key 
     ring.popByKey(-3);
-    //printing
     ring.print();
 
 }

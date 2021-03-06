@@ -7,8 +7,6 @@
 #include <math.h>
 #include <cstdlib>
 
-/*  enum used to print in 
-    ascending or descending order   */
 enum order{
     ascending = 1,
     descending = 0
@@ -30,14 +28,9 @@ private:
     };
 
     Node* root;
-    
-    /*-------------------*/
-    /*  PRIVATE METHODS  */
-    /*-------------------*/
 
     bool insert(Node*& node, const Key &k, const Info &i){  
     
-    // BST insertion 
     if (node == NULL){  
             Node* new_node = new Node;
             new_node->key = k;          
@@ -49,38 +42,29 @@ private:
             return true;    
     }
 
-    /* finding place for element
-        by checking its key     */
     if (k < node->key)  
         insert(node->left, k, i);  
     else if (k > node->key)  
         insert(node->right, k, i);  
-    else // Equal keys case
+    else 
         return false;  
 
-    //update height
     node->height = height(node);
 
     int balance = getBalance(node);
 
-        /*  ROTATION CASES  */
-
-    // Left Left Case  
     if (balance > 1 && k < node->left->key)  
         rotateToRight(node);  
   
-    // Right Right Case  
     if (balance < -1 && k > node->right->key)  
         rotateToLeft(node);  
   
-    // Left Right Case  
     if (balance > 1 && k > node->left->key)  
     {  
         node->left = rotateToLeft(node->left);  
         rotateToRight(node);  
     }  
   
-    // Right Left Case  
     if (balance < -1 && k < node->right->key)  
     {  
         node->right = rotateToRight(node->right);  
@@ -93,11 +77,9 @@ private:
 
     Node* erease(Node* &node, const Key &k){
 
-        //BST deleting
         if(node==NULL)
             return node;
 
-        //Finding node 
         if ( k < node->key ){  
             node->left = erease(node->left, k);  
   
@@ -105,7 +87,6 @@ private:
             node->right = erease(node->right, k);  
 
         }else{
-            //Node found
             Node *temp = NULL;
 
             if(node->left == NULL || node->right == NULL){
@@ -116,11 +97,9 @@ private:
                     temp = node->right;  
 
                 if(temp == NULL){
-                    //No child
                     temp = node;
                     node = NULL;                    
                 }else{ 
-                    //One child
                     node->key = temp->key;
                     node->info = temp->info;
                     node->left = temp->left;
@@ -130,15 +109,12 @@ private:
                 }
 
             }else{
-                //Two children
+
                 Node* temp = minValueNode(node->right);
 
-                /* Copy data from the minimal value node
-                    from right subtree to this node */ 
                 node->key = temp->key;
                 node->info = temp->info;  
 
-                // Delete repeating element
                 node->right = erease(node->right, temp->key);
                 
             }
@@ -148,48 +124,37 @@ private:
            
             } 
             
-            //Return balance in the tree
-
-                /*  ROTATION CASES  */
-            
             node->height = 1 + max(height(node->left),  
                                 height(node->right));  
             
             int balance = getBalance(node);  
 
-            // Left Left Case  
             if (balance > 1 && getBalance(node->left) >= 0){  
                return rotateToRight(node);  
             }        
-            // Left Right Case  
             if (balance > 1 && getBalance(node->left) < 0)  
             {  
                 node->left = rotateToLeft(node->left);  
                 return rotateToRight(node);  
             }  
         
-            // Right Right Case  
             if (balance < -1 && getBalance(node->right) <= 0){
                 return rotateToLeft(node);  
             }     
-            // Right Left Case  
             if (balance < -1 && getBalance(node->right) > 0)  
             {  
                 node->right = rotateToRight(node->right);  
                 return rotateToLeft(node);  
             }  
 
-        //return current root
         return node;  
     }
 
 
     void printAscending(Node *node) const{  
         if(node!=NULL){ 
-        //printing from the smallest
         printAscending(node->left);
         std::cout << node->key << " ";
-        //to the greatest
         printAscending(node->right);
         }
     }
@@ -197,10 +162,8 @@ private:
 
    void printDescending(Node *node) const{ 
        if(node!=NULL){ 
-        //printing from the greatest
         printDescending(node->right);
         std::cout << node->key << " ";
-        //to the smallest
         printDescending(node->left);
        }
    }
@@ -209,10 +172,10 @@ private:
    void ereaseAll(Node* &node){
        
        if(node!=NULL){
-           ereaseAll(node->left);   //erease left subtree
-           ereaseAll(node->right);  //erease right subtree
-           delete node;             //delete node 
-           node = NULL;             //and set to NULL
+           ereaseAll(node->left);  
+           ereaseAll(node->right);  
+           delete node;             
+           node = NULL;             
        }
    
     }
@@ -220,18 +183,18 @@ private:
 
     void copyTree(Node* &copiedTreeRoot, Node* otherTreeRoot){
     
-        if (otherTreeRoot == NULL){    //check if copying empty tree
+        if (otherTreeRoot == NULL){    
 
             copiedTreeRoot = NULL;  
 
         }else{
             
-            copiedTreeRoot = new Node;                      //copy otherTreeRoot  
+            copiedTreeRoot = new Node;                       
             copiedTreeRoot->key = otherTreeRoot->key;       
             copiedTreeRoot->info = otherTreeRoot->info;
 
-            copyTree(copiedTreeRoot->left, otherTreeRoot->left);       //then copy left 
-            copyTree(copiedTreeRoot->right, otherTreeRoot->right);     //and right subtree
+            copyTree(copiedTreeRoot->left, otherTreeRoot->left);       
+            copyTree(copiedTreeRoot->right, otherTreeRoot->right);     
         
             }   
     }
@@ -269,15 +232,12 @@ private:
         Node* L = node->left;   
         Node* LR = L->right;
 
-        //rotating
         L->right = node;
         node->left = LR;
 
-        //update heights
         node->height = max(height(node->left), height(node->right)) + 1; 
         L->height = max(height(L->left), height(L->right)) + 1;
         
-        //updating root
         node = L;
 
         return node;
@@ -289,15 +249,12 @@ private:
         Node* R = node->right;
         Node* RL = R->left;
         
-        //rotating
         R->left = node;
         node->right = RL;
         
-        //update heights
         node->height = max(height(node->left), height(node->right)) + 1; 
         R->height = max(height(R->left), height(R->right)) + 1;
         
-        //updating root
         node = R;
 
         return node;
@@ -372,7 +329,6 @@ private:
 
         Node* current = node;  
     
-        /* loop down to find the leftmost leaf */
         while (current->left != NULL)  
             current = current->left;  
     
@@ -387,7 +343,6 @@ private:
 
         Node* current = node;  
     
-        /* loop down to find the leftmost leaf */
         while (current->right != NULL)  
             current = current->right;  
     
@@ -452,10 +407,6 @@ private:
 
 public:
 
-    /*------------------*/
-    /*  PUBLIC METHODS  */
-    /*------------------*/
-
     Dictionary();
     Dictionary(const Dictionary<Key, Info> &rhs);
     ~Dictionary();
@@ -468,14 +419,14 @@ public:
     int treeHight() const;
     void display() const;
     int size() const;
-    void printInfo() const; //used in tests
+    void printInfo() const; 
     bool search(const Key &k);
     Info& getInfo(const Key &k) const;
 
     double averageKey();
 
-    void fillWithRandom(){  //additional functions for purpose of testing
-                            //adding n random elements to the tree
+    void fillWithRandom(){  
+
         Key k;
         Info i;
 
@@ -578,16 +529,16 @@ Dictionary<Key, Info>::Dictionary(const Dictionary<Key, Info> &rhs){
 template<typename Key, typename Info>
 const Dictionary<Key, Info>& Dictionary<Key, Info>::operator=(const Dictionary<Key, Info> &rhs){
 
-    if(this->root != rhs.root){ //check if different trees
+    if(this->root != rhs.root){ 
 
         if(root != NULL)
-            this->ereaseAll();  //delete all nodes from lhs tree
+            this->ereaseAll();  
         
-        if(rhs.root==NULL){     //empty rhs case
+        if(rhs.root==NULL){     
             this->ereaseAll();  
             root = NULL;
         }else{
-            copyTree(this->root, rhs.root); //copy elements
+            copyTree(this->root, rhs.root); 
         }
     }
     return *this;

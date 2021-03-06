@@ -1,6 +1,6 @@
 #include <iostream>
 #include <stdlib.h>
-#include "AVL_Test.h"
+#include "tests.h"
 
 int main(){
 

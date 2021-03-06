@@ -1,8 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
-#include <string.h>
-#include "Sequence.h"
 
+#include "sll.h"
 
 void testCopyConstr(){
 
@@ -58,15 +57,15 @@ void testProduce(){
 
     Sequence<double, std::string> seq2;
 
-    Sequence<double, std::string> prod = produce(seq, 1, 2, seq1, 10, 1, 17); //no such position
+    Sequence<double, std::string> prod = produce(seq, 1, 2, seq1, 10, 1, 17);
     prod.print(); 
-    Sequence<double, std::string> prod1 = produce(seq, 2, 4, seq1, 1, 3, -2); //negative limit
+    Sequence<double, std::string> prod1 = produce(seq, 2, 4, seq1, 1, 3, -2); 
     prod1.print();
-    Sequence<double, std::string> prod2 = produce(seq, 1, 2, seq1, 1, 1, 0); //zero limit
+    Sequence<double, std::string> prod2 = produce(seq, 1, 2, seq1, 1, 1, 0);
     prod2.print();
-    Sequence<double, std::string> prod3 = produce(seq, 1, 2, seq2, 1, 1, 17); //one list is empty
+    Sequence<double, std::string> prod3 = produce(seq, 1, 2, seq2, 1, 1, 17); 
     prod3.print();
-    Sequence<double, std::string> prod4 = produce(seq, 0, 3, seq1, 2, 4, 11); //works 
+    Sequence<double, std::string> prod4 = produce(seq, 0, 3, seq1, 2, 4, 11);
     prod4.print(); 
 
 }
@@ -83,11 +82,11 @@ void testRemove(){
     seq.pushBack("l", 8);
 
     if(seq.getFromPosition(-2)==NULL)
-        i++; //returns NULL
+        i++; 
     if(seq.getFromPosition(10)==NULL)
-        i++; //returns NULL
+        i++; 
     if(seq.getFromPosition(3)==NULL)
-        i++;; //returns node
+        i++;; 
     
     if(i==2)
         std::cout << "test passed" << std::endl;
@@ -99,8 +98,8 @@ void testRemove(){
     seq.ereaseByInfo(3);
     seq.ereaseByKey("g");
     seq.print();
-    seq.removeAll(); //removing all elements
-    seq1.removeAll(); //removing from empty list
+    seq.removeAll(); 
+    seq1.removeAll(); 
     seq.print();
     seq1.print();
 
@@ -117,21 +116,10 @@ void testAdding(){
     seq.pushBack("l", 8);
 
     seq.print();
-    seq.pushAfter(2, "k", 3); //adds element after second element 
-    seq.pushAfter(10, "r", 4); //no such position
-    seq.pushBack("b", 9); //last
-    seq.pushFront("x", 2); //first
+    seq.pushAfter(2, "k", 3);  
+    seq.pushAfter(10, "r", 4); 
+    seq.pushBack("b", 9);
+    seq.pushFront("x", 2); 
     seq.print();
 
-}
-
-int main(){
-
-    testCopyConstr();
-    testPlusConstr();
-    testProduce();
-    testAdding();
-    testRemove();
-  
-    return 0;
 }

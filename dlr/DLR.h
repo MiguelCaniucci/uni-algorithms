@@ -29,16 +29,13 @@ public:
     void clear();
     bool isEmpty() const;
     int size();
-    
-    void pushFront(Key k);
-    void pushBack(Key k);
-    bool pushAfter(Key k, Key nkey);
-    bool pushBefore(Key k, Key nkey);
-
+    void pushFront(const Key &k);
+    void pushBack(const Key &k);
+    bool pushAfter(const Key &k, const Key &new_key);
+    bool pushBefore(const Key &k, const Key &new_key);
     bool popFront();
     bool popBack();
     bool popByKey(const Key& k);
-    
     DLR<Key>(const DLR<Key> &givenRing);
     DLR<Key> &operator=(const DLR<Key> &rhs);
 	bool operator==(const DLR<Key> &rhs);
@@ -119,8 +116,6 @@ public:
 
 };
 
-//DLR METHODS
-
 template <typename Key>
 DLR<Key>::DLR(){
     start = NULL;
@@ -153,7 +148,7 @@ void DLR<Key>::print(){
 }
 
 template <typename Key>
-void DLR<Key>::pushFront(Key k){
+void DLR<Key>::pushFront(const Key &k){
 
     Node* node = new Node;
     node->key = k;
@@ -178,7 +173,7 @@ void DLR<Key>::pushFront(Key k){
 }
 
 template <typename Key>
-void DLR<Key>::pushBack(Key k){
+void DLR<Key>::pushBack(const Key &k){
 
     Node* node = new Node;
     node->key = k;
@@ -239,7 +234,7 @@ bool DLR<Key>::popBack(){
     }
 
 }
-//DOES NOT WORK PROPERLY FOR TOO MANY APPERENCES !!!
+
 template<typename Key>
 bool DLR<Key>::popByKey(const Key& k){
 
@@ -249,19 +244,16 @@ bool DLR<Key>::popByKey(const Key& k){
     for(int i = 0;i<l;i++){
         if(curr->key == k){
           
-            //first element case
             if(curr==start){
                 popFront();
                 wasDeleted=true;
                 curr = curr->next;
 
-            //last element case
             }else if(curr==start->prev){
                 popBack();
                 wasDeleted=true;
                 curr = curr->next;
            
-            //middle element case
             }else{
                 Node* temp = curr;
                 curr = curr->next;
@@ -276,7 +268,6 @@ bool DLR<Key>::popByKey(const Key& k){
                 length--;
             }
         }else{
-            //going through the list
             curr = curr->next;
         }
     }
@@ -284,22 +275,20 @@ bool DLR<Key>::popByKey(const Key& k){
 }
 
 template <typename Key>
-bool DLR<Key>::pushAfter(Key k, Key nkey){
+bool DLR<Key>::pushAfter(const Key &k, const Key &new_key){
 
     Node* curr = start;
     int l = length;
     for(int i = 0; i<l ;i++){
         if(curr->key == k){
 
-            //last element case
             if(curr==start->prev){
-                pushBack(nkey);
+                pushBack(new_key);
                 return true;
 
-            //middle element case
             }else{
                 Node* node = new Node;
-                node->key = nkey;
+                node->key = new_key;
                 node->next = curr->next;
                 node->prev = curr;
 
@@ -310,7 +299,6 @@ bool DLR<Key>::pushAfter(Key k, Key nkey){
                 return true;
             }
         }else{
-            //going through the list
             curr = curr->next;
         }
     }
@@ -319,21 +307,19 @@ bool DLR<Key>::pushAfter(Key k, Key nkey){
 }
 
 template <typename Key>
-bool DLR<Key>::pushBefore(Key k, Key nkey){
+bool DLR<Key>::pushBefore(const Key &k, const Key &new_key){
 
     Node* curr = start;
     for(int i = 0;i<length;i++){
         if(curr->key == k){
 
-            //first element case
             if(curr==start){
-                pushFront(nkey);
+                pushFront(new_key);
                 return true;
 
-            //middle element case
             }else{
                 Node* node = new Node;
-                node->key = nkey;
+                node->key = new_key;
                 node->next = curr;
                 node->prev = curr->prev;
 
@@ -345,7 +331,6 @@ bool DLR<Key>::pushBefore(Key k, Key nkey){
                 return true;
             }
         }else{
-            //going through the list
             curr = curr->next;
         }
     }
@@ -411,8 +396,6 @@ template <typename Key>
 bool DLR<Key>::operator!=(const DLR<Key> &rhs){
     return !(*this == rhs);
 }
-
-//FUNCTIONS
 
 template <typename Key>
 void split(const DLR<Key> &source, DLR<Key> &result1, bool dir1, int len1, DLR<Key> &result2, bool dir2, int len2) {

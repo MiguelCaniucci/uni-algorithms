@@ -1,6 +1,6 @@
 #include <iostream>
 #include <stdlib.h>
-#include "Dictionary.h"
+#include "avl.h"
 
 void testInsertion(){
 
@@ -25,7 +25,7 @@ void testInsertion(){
     avl.publicPrintPrettyTree();
 
     std::cout << "Inserting: 8, 7, 23" << std::endl << std::endl;
-    avl.insert(8,8); //doesn't add, key is unique
+    avl.insert(8,8); 
     avl.insert(7,3);
     avl.insert(23,5);
 
@@ -63,13 +63,13 @@ void testDeleting(){
     
     avl.display();
     std::cout << "Delete 35" << std::endl;
-    avl.erease(35);//two children case
+    avl.erease(35);
     avl.display();
     std::cout << "Delete 121" << std::endl;
-    avl.erease(121);//no children case
+    avl.erease(121);
     avl.display();
     std::cout << "Delete 0" << std::endl;
-    avl.erease(0);//one child case
+    avl.erease(0);
     avl.display();
     avl.printInfo();
 
@@ -119,7 +119,7 @@ void testDisplay(){
     std::cout << "**********************" << std::endl << std::endl;
     
     Dictionary<int, int> avl;
-    avl.display(); //empty tree
+    avl.display(); 
     avl.print(ascending);
     avl.print(descending);
     std::cout << "Inserting: 1, 5, 3, 2, 7, 0" << std::endl << std::endl;
@@ -168,7 +168,6 @@ void findingKeyInfoTest(){
         std::cout << std::endl;
     }
 
-    //catching exception if there is no node with the given key
     try{
     std::cout << avl.getInfo(7) << std::endl;
     }catch(...){

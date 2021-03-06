@@ -17,56 +17,33 @@ private:
         Node* head;
 
 public:
-        
-        Sequence(); //constructor, sets head to NULL
-            
- 
-        ~Sequence(); //destructor
-               
 
-        void pushBack(Node* node); //adding single node at the end of the list
-
-        void pushBack(Key k, Info i); //adding node at the end of the list 
-
-        void pushAfter(int pos, Key k, Info i); //adds element after given position 
-            
-        void pushFront(Key k, Info i); //adds element as first element 
-
-        void popBack(); //deletes last element of the list 
-
-        void popFront(); //deletes first element of the list
-
-        void ereaseByKey(const Key &k); //deleting nodes by key, if same key
-                            // for multiple nodes deletes all of them
-    
-        void ereaseByInfo(const Info &i);  //deleting nodes by info, if same info
-                            // for multiple nodes deletes all of them
-            
-        int size(); //returns size of sequence
-        
+        Sequence(); 
+        ~Sequence(); 
+        void pushBack(Node* node); 
+        void pushBack(Key k, Info i);  
+        void pushAfter(int pos, Key k, Info i);  
+        void pushFront(Key k, Info i);  
+        void popBack();  
+        void popFront(); 
+        void ereaseByKey(const Key &k); 
+        void ereaseByInfo(const Info &i);  
+        int size(); 
         void print();
-
-        Node* getFromPosition(int position); //returns pointer to node from given position
-
-        Sequence(const Sequence &s); //copy constructor 
-
-        Sequence<Key, Info>& operator=(Sequence &s); //assignment operator 
-
-        Sequence<Key, Info>& operator+(Sequence &s);  //adds one list to another
-
-        void removeAll(); //removes all the elements and sets head to NULL
-
-        bool isEmpty(); //returns true if list is empty, otherwise returns false
-        
+        Node* getFromPosition(int position); 
+        Sequence(const Sequence &s);  
+        Sequence<Key, Info>& operator=(Sequence &s);  
+        Sequence<Key, Info>& operator+(Sequence &s);  
+        void removeAll(); 
+        bool isEmpty(); 
         Node* getKey(const Key &k);
-
         Node* getInfo(const Info &i);
-        
+
 };
 
 template<typename Key, typename Info>
 Sequence<Key, Info> produce(const Sequence<Key, Info> &S1, int stat1, int len1, const Sequence<Key, Info> &S2, int stat2, int len2, int limit){
-    
+
     Sequence<Key, Info> produced;
     Sequence<Key, Info> copy1 = S1;
     Sequence<Key, Info> copy2 = S2;
@@ -85,41 +62,41 @@ Sequence<Key, Info> produce(const Sequence<Key, Info> &S1, int stat1, int len1, 
 
     }else{
         
-    int i, j, pos1 = stat1, pos2 = stat2;
+        int i, j, pos1 = stat1, pos2 = stat2;
 
-    while(produced.size()<limit){
+        while(produced.size()<limit){
 
-        i = 0, j = 0;
+            i = 0, j = 0;
+            while(i<len1){
+                if(produced.size()<limit)
+                    produced.pushBack(copy1.getFromPosition(pos1)->key, copy1.getFromPosition(pos1)->info);    //sequence S1 loop
+                pos1++, i++;
+                if(pos1==copy1.size())
+                    pos1=0;
+                
+            }    
 
-        while(i<len1){
-            if(produced.size()<limit)
-                produced.pushBack(copy1.getFromPosition(pos1)->key, copy1.getFromPosition(pos1)->info);    //sequence S1 loop
-            pos1++, i++;
-            if(pos1==copy1.size())
-                pos1=0;
+            while(j<len2){
+                if(produced.size()<limit)
+                    produced.pushBack(copy2.getFromPosition(pos2)->key, copy2.getFromPosition(pos2)->info);   //sequence S2 loop
+                pos2++, j++;
+                if(pos2==copy2.size())
+                    pos2=0;
             
-        }    
-
-        while(j<len2){
-            if(produced.size()<limit)
-                produced.pushBack(copy2.getFromPosition(pos2)->key, copy2.getFromPosition(pos2)->info);   //sequence S2 loop
-            pos2++, j++;
-            if(pos2==copy2.size())
-                pos2=0;
-           
+            }
         }
-    }
     }
     return produced;
 
 }
+
         template<typename Key, typename Info>
-        Sequence<Key, Info>::Sequence(){ //constructor, sets head to NULL
+        Sequence<Key, Info>::Sequence(){ 
             this->head = NULL;
         }
  
         template<typename Key, typename Info>
-        Sequence<Key, Info>::~Sequence(){ //destructor
+        Sequence<Key, Info>::~Sequence(){ 
             Node* del = head;
             Node* temp = new Node;
             while(del!=NULL){
@@ -130,7 +107,7 @@ Sequence<Key, Info> produce(const Sequence<Key, Info> &S1, int stat1, int len1, 
         }
     
         template<typename Key, typename Info>
-        void Sequence<Key, Info>::pushBack(Node* node){ //adding single node at the end of the list
+        void Sequence<Key, Info>::pushBack(Node* node){ 
 
             if(head==NULL){
                 head = node;
@@ -144,7 +121,7 @@ Sequence<Key, Info> produce(const Sequence<Key, Info> &S1, int stat1, int len1, 
         }
 
         template<typename Key, typename Info>
-        void Sequence<Key, Info>::pushBack(Key k, Info i){ //adding node at the end of the list 
+        void Sequence<Key, Info>::pushBack(Key k, Info i){ 
             Node* node = new Node;
             node->key = k;
             node->info = i;
@@ -153,7 +130,7 @@ Sequence<Key, Info> produce(const Sequence<Key, Info> &S1, int stat1, int len1, 
         }
 
         template<typename Key, typename Info>
-        void Sequence<Key, Info>::pushAfter(int pos, Key k, Info i){ //adds element after given position 
+        void Sequence<Key, Info>::pushAfter(int pos, Key k, Info i){ 
             
             Node* node = new Node;
             node->key = k;
@@ -161,11 +138,11 @@ Sequence<Key, Info> produce(const Sequence<Key, Info> &S1, int stat1, int len1, 
 
             if(pos == size()-1){
                 
-                pushBack(k, i);  //adding as last
+                pushBack(k, i);  
             
             }else if(pos>=size()||pos<0){
                 
-                std::cout << "no such position" << std::endl; //wrong position
+                std::cout << "no such position" << std::endl; 
             
             }else{
                 
@@ -177,13 +154,13 @@ Sequence<Key, Info> produce(const Sequence<Key, Info> &S1, int stat1, int len1, 
                 curr = curr->next;
                 n++;
             }
-            prev->next = node;      //adding between 
+            prev->next = node;      
             node->next = curr;
           }
         }
 
         template<typename Key, typename Info>
-        void Sequence<Key, Info>::pushFront(Key k, Info i){ //adds element as first element 
+        void Sequence<Key, Info>::pushFront(Key k, Info i){ 
 
             Node* node = new Node; 
             Node* temp = new Node;
@@ -196,7 +173,7 @@ Sequence<Key, Info> produce(const Sequence<Key, Info> &S1, int stat1, int len1, 
         }
 
         template<typename Key, typename Info>
-        void Sequence<Key, Info>::popBack(){ //deletes last element of the list 
+        void Sequence<Key, Info>::popBack(){ 
             
             Node *temp = head;
             Node *prev;
@@ -216,7 +193,7 @@ Sequence<Key, Info> produce(const Sequence<Key, Info> &S1, int stat1, int len1, 
         }
 
         template<typename Key, typename Info>
-        void Sequence<Key, Info>::popFront(){ //deletes first element of the list
+        void Sequence<Key, Info>::popFront(){ 
 
             Node* toDelete = new Node;
 
@@ -231,19 +208,18 @@ Sequence<Key, Info> produce(const Sequence<Key, Info> &S1, int stat1, int len1, 
         }
 
         template<typename Key, typename Info>
-        void Sequence<Key, Info>::ereaseByKey(const Key &k){ //deleting nodes by key, if same key
-                            // for multiple nodes deletes all of them
-            
+        void Sequence<Key, Info>::ereaseByKey(const Key &k){ 
+                
             Node* temp = head;
             Node* prev = NULL;
             Node* del = new Node;
             if(temp==NULL){
-                std::cout<<"list is empty"<<std::endl; //empty list case
+                std::cout<<"list is empty"<<std::endl; 
             }else{
                 
             while(temp->key==k){
                 prev = head;
-                head = head->next;     //first element
+                head = head->next;     
                 temp = head;
                 delete prev;
                 
@@ -253,7 +229,7 @@ Sequence<Key, Info> produce(const Sequence<Key, Info> &S1, int stat1, int len1, 
             temp = head->next;
 
             while(temp->next!=NULL){
-                     //middle element
+
                 if(temp->key == k){
                     del = temp;
                     temp=temp->next;
@@ -266,7 +242,7 @@ Sequence<Key, Info> produce(const Sequence<Key, Info> &S1, int stat1, int len1, 
                 }
 
                 if(temp->key == k){
-                    prev->next = NULL;     //last element 
+                    prev->next = NULL;     
                     delete temp;
                 }
 
@@ -275,19 +251,18 @@ Sequence<Key, Info> produce(const Sequence<Key, Info> &S1, int stat1, int len1, 
         }
     
         template<typename Key, typename Info>
-        void Sequence<Key, Info>::ereaseByInfo(const Info &i){  //deleting nodes by info, if same info
-                            // for multiple nodes deletes all of them
-            
+        void Sequence<Key, Info>::ereaseByInfo(const Info &i){  
+
             Node* temp = head;
             Node* prev = NULL;
             Node* del = new Node;
             if(temp==NULL){
-                std::cout<<"list is empty"<<std::endl; //empty list case
+                std::cout<<"list is empty"<<std::endl; 
             }else{
                 
             while(temp->info==i){
                 prev = head;
-                head = head->next;     //first element
+                head = head->next;     
                 temp = head;
                 delete prev;
                 
@@ -297,7 +272,7 @@ Sequence<Key, Info> produce(const Sequence<Key, Info> &S1, int stat1, int len1, 
             temp = head->next;
 
             while(temp->next!=NULL){
-                     //middle element
+
                 if(temp->info == i){
                     del = temp;
                     temp=temp->next;
@@ -310,7 +285,7 @@ Sequence<Key, Info> produce(const Sequence<Key, Info> &S1, int stat1, int len1, 
                 }
 
                 if(temp->info == i){
-                    prev->next = NULL;     //last element 
+                    prev->next = NULL;     
                     delete temp;
                 }
 
@@ -320,7 +295,7 @@ Sequence<Key, Info> produce(const Sequence<Key, Info> &S1, int stat1, int len1, 
     
 
         template<typename Key, typename Info>
-        int Sequence<Key, Info>::size(){ //returns size of sequence
+        int Sequence<Key, Info>::size(){ 
 
             if(head==NULL) return 0;
             int i = 0;
@@ -350,7 +325,7 @@ Sequence<Key, Info> produce(const Sequence<Key, Info> &S1, int stat1, int len1, 
         }
 
         template<typename Key, typename Info>
-        typename Sequence<Key, Info>::Node* Sequence<Key, Info>::getFromPosition(int position){ //returns pointer to node from given position
+        typename Sequence<Key, Info>::Node* Sequence<Key, Info>::getFromPosition(int position){ 
 
             if(position == 0){
                 return head;
@@ -372,7 +347,7 @@ Sequence<Key, Info> produce(const Sequence<Key, Info> &S1, int stat1, int len1, 
         }
         
         template<typename Key, typename Info>
-        Sequence<Key, Info>::Sequence(const Sequence &s){ //copy constructor 
+        Sequence<Key, Info>::Sequence(const Sequence &s){ 
             this->head = NULL;
             Node* temp = s.head;
             while(temp!=NULL){
@@ -383,7 +358,7 @@ Sequence<Key, Info> produce(const Sequence<Key, Info> &S1, int stat1, int len1, 
         }
 
         template<typename Key, typename Info>
-        Sequence<Key, Info>& Sequence<Key, Info>::operator=(Sequence<Key, Info> &s){ //assignment operator 
+        Sequence<Key, Info>& Sequence<Key, Info>::operator=(Sequence<Key, Info> &s){ 
 
             if(this == &s){
                 std::cout << "same lists" << std::endl;
@@ -408,7 +383,7 @@ Sequence<Key, Info> produce(const Sequence<Key, Info> &S1, int stat1, int len1, 
         }
 
         template<typename Key, typename Info>
-        Sequence<Key, Info>& Sequence<Key, Info>::operator+(Sequence &s){  //adds one list to another
+        Sequence<Key, Info>& Sequence<Key, Info>::operator+(Sequence &s){  
             
             if(this==&s){
                 std::cout << "same lists" << std::endl;
@@ -424,7 +399,7 @@ Sequence<Key, Info> produce(const Sequence<Key, Info> &S1, int stat1, int len1, 
         }
 
         template<typename Key, typename Info>
-        void Sequence<Key, Info>::removeAll(){ //removes all the elements and sets head to NULL
+        void Sequence<Key, Info>::removeAll(){ 
             
             Node* temp = head;
             Node* del = new Node;
@@ -438,7 +413,7 @@ Sequence<Key, Info> produce(const Sequence<Key, Info> &S1, int stat1, int len1, 
         }
 
         template<typename Key, typename Info>
-        bool Sequence<Key, Info>::isEmpty(){ //returns true if list is empty, otherwise returns false
+        bool Sequence<Key, Info>::isEmpty(){ 
             if(head==NULL)
                 return true;    
             else
