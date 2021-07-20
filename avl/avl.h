@@ -390,19 +390,12 @@ private:
 
     }
 
-    /********************************/
-    /*  NOT A PART OF THE PROJECT
-        JUST LEARNING FOR EXAM    */
-
     double sumOfKeys(Node* node){
         if(!node)
             return 0;
         else
             return node->key + sumOfKeys(node->left) + sumOfKeys(node->right);
     }
-
-    /********************************/
-
 
 
 public:
