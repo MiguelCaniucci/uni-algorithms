@@ -1,8 +1,8 @@
 # Data Structures
 Projects from Algorithms and Data Structures course at Warsaw University of Technology. 
 
-### AVL tree
+### * AVL tree
 
-### Doubly Linked Ring
+### * Doubly Linked Ring
 
-### Singly Linked List
+### * Singly Linked List
